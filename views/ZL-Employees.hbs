@@ -18,16 +18,16 @@
         {{! For each row, print the id, fname, lname, homeworld and age }}
         {{#each people}}
         <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.fname}}</td>
-            <td>{{this.lname}}</td>
-            <td>{{this.homeworld}}</td>
-            <td>{{this.age}}</td>
+            <td>{{this.employee_ID}}</td>
+            <td>{{this.zoo_ID}}</td>
+            <td>{{this.first_name}}</td>
+            <td>{{this.last_name}}</td>
+            <td>{{this.role_ID}}</td>
 
             {{! DELETE form }}
-            <form id='delete_person_form'>
-                <input type='hidden' name='delete_person_id' value='{{this.id}}' />
-                <input type='hidden' name='delete_person_name' value='{{this.fname}} {{this.lname}}' />
+            <form id='delete_employee_form'>
+                <input type='hidden' name='delete_employee_id' value='{{this.employee_ID}}' />
+                <input type='hidden' name='delete_employee_name' value='{{this.first_name}} {{this.last_name}}' />
                 <td>
                     <button type='submit'>
                         Delete
@@ -40,26 +40,14 @@
 </table>
 
 {{! CREATE form }}
-<h2>Create a Person</h2>
-<form class='cuForm' id='create_person_form'>
-    <label for='create_person_fname'>First Name: </label>
-    <input type='text' name='create_person_fname' id='create_person_fname' required />
+<h2>Register an Employee</h2>
+<form class='cuForm' id='create_employee_form'>
+    <label for='create_employee_fname'>First Name: </label>
+    <input type='text' name='create_employee_first_name' id='create_employee_first_name' required />
 
-    <label for='create_person_lname'>Last Name: </label>
-    <input type='text' name='create_person_lname' id='create_person_lname' />
-
-    <label for='create_person_homeworld'>Homeworld: </label>
-    <select name='create_person_homeworld' id='create_person_homeworld'>
-        <option value='NULL' selected>Select a Planet</option>
-        <option value='NULL'>&lt; None &gt;</option>
-        {{#each homeworlds}}
-        <option value='{{this.id}}' required>{{this.name}}</option>
-        {{/each}}
-    </select>
-
-    <label for='create_person_age'>Age:</label>
-    <input type='number' name='create_person_age' id='create_person_age' min='0' />
-
+    <label for='create_employee_last_name'>Last Name: </label>
+    <input type='text' name='create_employee_last_name' id='create_employee_last_name' />
+    
     <input type='submit' />
 </form>
 
