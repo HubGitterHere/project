@@ -56,14 +56,14 @@ app.get('/bsg-people', async function (req, res) {
 });
 
 
-app.get('/Animals', async function (req, res) {
+app.get('/ZL-Animals', async function (req, res) {
     try {
         // Create and execute our queries
-        // In query1, we use a JOIN clause to display the names of the homeworlds
+        const query1 = `SELECT * FROM Animals`;
+        const [animals] = await db.query(query1);
 
         // Render the Animal.hbs file, and also send the renderer
-        //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('Animals');
+        res.render('ZL-Animals', {animals: animals});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -73,13 +73,13 @@ app.get('/Animals', async function (req, res) {
     }
 });
 
-app.get('/Species', async function (req, res) {
+app.get('/ZL-Species', async function (req, res) {
     try {
         // Create and execute our queries
 
         // Render the Animal.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('Species');
+        res.render('ZL-Species');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -89,13 +89,13 @@ app.get('/Species', async function (req, res) {
     }
 });
 
-app.get('/Zoos', async function (req, res) {
+app.get('/ZL-Zoos', async function (req, res) {
     try {
         // Create and execute our queries
 
         // Render the Zoos.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('Zoos');
+        res.render('ZL-Zoos');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -105,13 +105,13 @@ app.get('/Zoos', async function (req, res) {
     }
 });
 
-app.get('/Employees', async function (req, res) {
+app.get('/ZL-Employees', async function (req, res) {
     try {
         // Create and execute our queries
 
         // Render the Employees.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('Employees');
+        res.render('ZL-Employees');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -121,13 +121,77 @@ app.get('/Employees', async function (req, res) {
     }
 });
 
-app.get('/Caretakings', async function (req, res) {
+app.get('/ZL-Caretakings', async function (req, res) {
     try {
         // Create and execute our queries
 
         // Render the Caretakings.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('Caretakings');
+        res.render('ZL-Caretakings');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.get('/ZL-Diets', async function (req, res) {
+    try {
+        // Create and execute our queries
+
+        // Render the Diets.hbs file, and also send the renderer
+        //  an object that contains our bsg_people and bsg_homeworld information
+        res.render('ZL-Diets');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.get('/ZL-FeedingSchedules', async function (req, res) {
+    try {
+        // Create and execute our queries
+
+        // Render the FeedingSchedules.hbs file, and also send the renderer
+        //  an object that contains our bsg_people and bsg_homeworld information
+        res.render('ZL-FeedingSchedules');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.get('/ZL-Enclosures', async function (req, res) {
+    try {
+        // Create and execute our queries
+
+        // Render the Enclosures.hbs file, and also send the renderer
+        //  an object that contains our bsg_people and bsg_homeworld information
+        res.render('ZL-Enclosures');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.get('/ZL-Roles', async function (req, res) {
+    try {
+        // Create and execute our queries
+
+        // Render the Roles.hbs file, and also send the renderer
+        //  an object that contains our bsg_people and bsg_homeworld information
+        res.render('ZL-Roles');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
