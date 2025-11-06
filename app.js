@@ -76,10 +76,12 @@ app.get('/ZL-Animals', async function (req, res) {
 app.get('/ZL-Species', async function (req, res) {
     try {
         // Create and execute our queries
+        const query1 = `SELECT * FROM Species`;
+        const [species] = await db.query(query1);
 
         // Render the Animal.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-Species');
+        res.render('ZL-Species', {species: species});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
