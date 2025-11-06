@@ -21,7 +21,7 @@
             <td>{{this.animal_name}}</td>
             <td>{{this.species}}</td>
             <td>{{this.zoo}}</td>
-            <td>{{this.arival_date}}</td>
+            <td>{{this.arrival_date}}</td>
 
             {{! DELETE form }}
             <form id='delete_animal_form'>
@@ -44,17 +44,26 @@
     <label for='create_animal_name'>Name: </label>
     <input type='text' name='create_animal_name' id='create_animal_name' required />
 
-    <label for='create_animal_enclosure'>Enclosure: </label>
-    <select name='create_animal_enclosure' id='create_animal_enclosure'>
-        <option selected>Select an enclosure</option>
-        <option>&lt; None &gt;</option>
-        {{#each enclosures}}
-        <option value='{{this.animal_ID}}' required>{{this.animal_name}}</option>
+    <label for="choose_animal_species">Species: </label>
+    <select name="choose_animal_species" id="create_animal_species">
+        <option selected>Select a species</option>
+        {{#each species}}
+        <option value="{{this.species_ID}}" required>{{this.common_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="choose_animal_zoo">Zoo: </label>
+    <select name="choose_animal_zoo" id="choose_animal_zoo">
+        <option value = 1>Select a Zoo</option>
+        {{#each zoos}}
+        <option value='{{this.zoo_ID}}' required>
+            {{this.zoo_name}}
+        </option>
         {{/each}}
     </select>
 
     <label for='create_animal_age'>Arrival Date:</label>
-    <input type='number' name='create_animal_age' id='create_animal_age' min='0' />
+    <input type='date' name='create_animal_arrival_date' id='create_animal_arrival_date' min='0' />
 
     <input type='submit' />
 </form>
@@ -64,8 +73,8 @@
 <form class='cuForm' id='update_animal_form'>
     <label for='update_animal_id'>Animal to Update: </label>
     <select name='update_animal_id' id='update_animal_id' required>
-        <option value='' disabled selected>Select a animal</option>
-        {{#each animal}}
+        <option value='' disabled selected>Select an animal</option>
+        {{#each animals}}
         <option value='{{this.animal_ID}}' required>
             {{this.animal_ID}}
             -
@@ -74,22 +83,17 @@
         {{/each}}
     </select>
 
+    <label for="update_animal_species">Species: </label>
+    <select name ="update_animal_species" id="update_animal_species">
+        <option value=1></option>
+    </select>
+
     <label for='update_animal_zoo'>Zoos: </label>
     <select name = 'update_animal_zoo' id='update_animal_zoo'>
         <option value = 1>Select a Zoo</option>
         {{#each zoos}}
         <option value='{{this.zoo_ID}}' required>
             {{this.zoo_name}}
-        </option>
-        {{/each}}
-    </select>
-
-    <label for='update_animal_enclosure'>Enclosure: </label>
-    <select name='update_animal_enclosure' id='update_animal_enclosure'>
-        <option value='NULL' disabled selected>Select an Enclosure</option>
-        {{#each enclosures}}
-        <option value='{{this.animal_ID}}' required>
-            {{this.animal_name}}
         </option>
         {{/each}}
     </select>
