@@ -118,7 +118,7 @@ app.get('/ZL-Zoos', async function (req, res) {
 app.get('/ZL-Employees', async function (req, res) {
     try {
         // Create and execute our queries
-        const query1 = "SELECT first_name, last_name, FROM Employees;";
+        const query1 = "SELECT first_name, last_name FROM Employees;";
         const [employees] = await db.query(query1);
 
         // Render the Employees.hbs file, and also send the renderer
