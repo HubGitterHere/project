@@ -59,11 +59,18 @@ app.get('/bsg-people', async function (req, res) {
 app.get('/ZL-Animals', async function (req, res) {
     try {
         // Create and execute our queries
-        const query1 = `SELECT * FROM Animals`;
+        const query1 = `SELECT Animals.animal_name, Animals.arrival_date \
+        Species.common_name AS 'Species', Zoos.zoo_name AS 'Zoo' FROM Animals \
+        LEFT JOIN Species ON Animals.species_ID = Species.species_ID
+        LEFT JOIN Zoos ON Animals.zoo_ID = Zoos.zoo_ID;`;
+        const query2 = 'SELECT * FROM Zoos'
+        const query3 = 'SELECT * FROM Species;'
         const [animals] = await db.query(query1);
+        const [zoos] = await db.query(query2);
+        const [species] = await db.query(query3);
 
         // Render the Animal.hbs file, and also send the renderer
-        res.render('ZL-Animals', {animals: animals});
+        res.render('ZL-Animals', {animals: animals, species: species});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser

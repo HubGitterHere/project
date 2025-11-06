@@ -18,11 +18,10 @@
         {{! For each row, print the animal_ID, zoo_ID, species_ID, arrival_date, and animal_name }}
         {{#each animals}}
         <tr>
-            <td>{{this.animal_ID}}</td>
-            <td>{{this.zoo_ID}}</td>
-            <td>{{this.species_ID}}</td>
-            <td>{{this.arival_date}}</td>
             <td>{{this.animal_name}}</td>
+            <td>{{this.species}}</td>
+            <td>{{this.zoo}}</td>
+            <td>{{this.arival_date}}</td>
 
             {{! DELETE form }}
             <form id='delete_animal_form'>
