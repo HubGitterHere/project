@@ -59,18 +59,18 @@ app.get('/bsg-people', async function (req, res) {
 app.get('/ZL-Animals', async function (req, res) {
     try {
         // Create and execute our queries
-        const query1 = `SELECT Animals.animal_name, Animals.arrival_date \
-        Species.common_name AS 'Species', Zoos.zoo_name AS 'Zoo' FROM Animals \
-        LEFT JOIN Species ON Animals.species_ID = Species.species_ID
-        LEFT JOIN Zoos ON Animals.zoo_ID = Zoos.zoo_ID;`;
-        const query2 = 'SELECT * FROM Zoos'
-        const query3 = 'SELECT * FROM Species;'
+        const query1 = `SELECT animal_name, Species.common_name AS species, 
+            Zoos.zoo_name AS zoo, arrival_date FROM Animals
+            INNER JOIN Species ON Animals.species_ID = Species.species_ID
+            INNER JOIN Zoos ON Animals.zoo_ID = Zoos.zoo_ID;`;
+        const query2 = 'SELECT * FROM Zoos;';
+        const query3 = 'SELECT * FROM Species;';
         const [animals] = await db.query(query1);
         const [zoos] = await db.query(query2);
         const [species] = await db.query(query3);
 
         // Render the Animal.hbs file, and also send the renderer
-        res.render('ZL-Animals', {animals: animals, species: species});
+        res.render('ZL-Animals', {animals: animals, zoos:zoos, species: species});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -83,12 +83,11 @@ app.get('/ZL-Animals', async function (req, res) {
 app.get('/ZL-Species', async function (req, res) {
     try {
         // Create and execute our queries
-        const query1 = `SELECT * FROM Species`;
+        const query1 = "SELECT common_name, scientific_name FROM Species;";
         const [species] = await db.query(query1);
-
         // Render the Animal.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-Species', {species: species});
+        res.render('ZL-Species', {species:species});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -101,10 +100,12 @@ app.get('/ZL-Species', async function (req, res) {
 app.get('/ZL-Zoos', async function (req, res) {
     try {
         // Create and execute our queries
-
+        const query1 = "SELECT zoo_name, city, state, total_animals FROM Zoos;";
+        const [zoos] = await db.query(query1);
+        
         // Render the Zoos.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-Zoos');
+        res.render('ZL-Zoos', {zoos: zoos});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -117,10 +118,12 @@ app.get('/ZL-Zoos', async function (req, res) {
 app.get('/ZL-Employees', async function (req, res) {
     try {
         // Create and execute our queries
+        const query1 = "SELECT first_name, last_name, FROM Employees;";
+        const [employees] = await db.query(query1);
 
         // Render the Employees.hbs file, and also send the renderer
-        //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-Employees');
+        //  an object that contains our employee information
+        res.render('ZL-Employees', {employees: employees});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -133,10 +136,27 @@ app.get('/ZL-Employees', async function (req, res) {
 app.get('/ZL-Caretakings', async function (req, res) {
     try {
         // Create and execute our queries
+        const query1 = "SELECT Animals.animal_name, employee.FullName, diet.diet_details, \
+            feeding_time, Enclosures.enclosure_type FROM Caretakings \
+            INNER JOIN Animals ON Caretakings.animal_ID = aid, \
+            INNER JOIN Employees ON Caretakings.employee_ID = emid, \
+            INNER JOIN Diets ON Caretakings.diet_ID = did, \
+            INNER JOIN Enclosures ON Caretakings.enclosure_ID = enid;";
+        const query2 = "SELECT * FROM Animals;";
+        const query3 = "SELECT * FROM Employees;";
+        const query4 = "SELECT * FROM Diets;";
+        const query6 = "SELECT * FROM Enclosures;";
+        const [caretakings] = await db.query(query1);
+        const [animals] = await db.query(query2);
+        const [employees] = await db.query(query3);
+        const [diets] = await db.query(query4);
+        const [enclosures] = await db.query(query6);
 
         // Render the Caretakings.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-Caretakings');
+        res.render('ZL-Caretakings', {caretakings:caretakings, animals:animals,
+            employees:employees, diets:diets, feedingschedules:feedingschedules,
+            enclosures:enclosures});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -149,26 +169,12 @@ app.get('/ZL-Caretakings', async function (req, res) {
 app.get('/ZL-Diets', async function (req, res) {
     try {
         // Create and execute our queries
-
+        const query1 = "SELECT diet_details FROM Diets;"
+        const [diets] = await db.query(query1);
+        
         // Render the Diets.hbs file, and also send the renderer
-        //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-Diets');
-    } catch (error) {
-        console.error('Error executing queries:', error);
-        // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
-        );
-    }
-});
-
-app.get('/ZL-FeedingSchedules', async function (req, res) {
-    try {
-        // Create and execute our queries
-
-        // Render the FeedingSchedules.hbs file, and also send the renderer
-        //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-FeedingSchedules');
+        //  an object that contains our diets information
+        res.render('ZL-Diets', {diets: diets});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -181,10 +187,12 @@ app.get('/ZL-FeedingSchedules', async function (req, res) {
 app.get('/ZL-Enclosures', async function (req, res) {
     try {
         // Create and execute our queries
+        const query1 = "SELECT enclosure_type FROM Enclosures;";
+        const [enclosures] = await db.query(query1);
 
         // Render the Enclosures.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-Enclosures');
+        res.render('ZL-Enclosures', {enclosures: enclosures});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -197,10 +205,12 @@ app.get('/ZL-Enclosures', async function (req, res) {
 app.get('/ZL-Roles', async function (req, res) {
     try {
         // Create and execute our queries
+        const query1 = "SELECT role_title FROM Roles;";
+        const [roles] = await db.query(query1);
 
         // Render the Roles.hbs file, and also send the renderer
         //  an object that contains our bsg_people and bsg_homeworld information
-        res.render('ZL-Roles');
+        res.render('ZL-Roles', {roles: roles});
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
