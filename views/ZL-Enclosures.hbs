@@ -5,7 +5,7 @@
     <thead>
         {{! For the table header row, we print the DB attribute names }}
         <tr>
-            {{#each people.[0]}}
+            {{#each enclosures.[0]}}
             <th>
                 {{@key}}
             </th>
@@ -16,18 +16,14 @@
 
     <tbody>
         {{! For each row, print the id, fname, lname, homeworld and age }}
-        {{#each people}}
+        {{#each enclosures}}
         <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.fname}}</td>
-            <td>{{this.lname}}</td>
-            <td>{{this.homeworld}}</td>
-            <td>{{this.age}}</td>
+            <td>{{this.enclosure_type}}</td>
 
             {{! DELETE form }}
-            <form id='delete_person_form'>
-                <input type='hidden' name='delete_person_id' value='{{this.id}}' />
-                <input type='hidden' name='delete_person_name' value='{{this.fname}} {{this.lname}}' />
+            <form id='delete_enclosure_form'>
+                <input type='hidden' name='delete_enclosure_id' value='{{this.id}}' />
+                <input type='hidden' name='delete_enclosure_name' value='{{this.fname}} {{this.lname}}' />
                 <td>
                     <button type='submit'>
                         Delete
@@ -40,35 +36,20 @@
 </table>
 
 {{! CREATE form }}
-<h2>Create a Person</h2>
-<form class='cuForm' id='create_person_form'>
-    <label for='create_person_fname'>First Name: </label>
-    <input type='text' name='create_person_fname' id='create_person_fname' required />
-
-    <label for='create_person_lname'>Last Name: </label>
-    <input type='text' name='create_person_lname' id='create_person_lname' />
-
-    <label for='create_person_homeworld'>Homeworld: </label>
-    <select name='create_person_homeworld' id='create_person_homeworld'>
-        <option value='NULL' selected>Select a Planet</option>
-        <option value='NULL'>&lt; None &gt;</option>
-        {{#each homeworlds}}
-        <option value='{{this.id}}' required>{{this.name}}</option>
-        {{/each}}
-    </select>
-
-    <label for='create_person_age'>Age:</label>
-    <input type='number' name='create_person_age' id='create_person_age' min='0' />
+<h2>Create a Enclosure</h2>
+<form class='cuForm' id='create_enclosure_form'>
+    <label for='create_enclosure_fname'>Enclosure Type: </label>
+    <input type='text' name='create_enclosure_fname' id='create_enclosure_fname' required />
 
     <input type='submit' />
 </form>
 
 {{! UPDATE form }}
-<h2>Update a Person</h2>
-<form class='cuForm' id='update_person_form'>
-    <label for='update_person_id'>Person to Update: </label>
-    <select name='update_person_id' id='update_person_id' required>
-        <option value='' disabled selected>Select a Person</option>
+<h2>Update a Enclosure</h2>
+<form class='cuForm' id='update_enclosure_form'>
+    <label for='update_enclosure_id'>Enclosure to Update: </label>
+    <select name='update_enclosure_id' id='update_enclosure_id' required>
+        <option value='' disabled selected>Select a Enclosure</option>
         {{#each people}}
         <option value='{{this.id}}' required>
             {{this.id}}
@@ -79,19 +60,8 @@
         {{/each}}
     </select>
 
-    <label for='update_person_homeworld'>Homeworld: </label>
-    <select name='update_person_homeworld' id='update_person_homeworld'>
-        <option value='NULL' disabled selected>Select a Planet</option>
-        <option value='NULL'>&lt; None &gt;</option>
-        {{#each homeworlds}}
-        <option value='{{this.id}}' required>
-            {{this.name}}
-        </option>
-        {{/each}}
-    </select>
-
-    <label for='update_person_age'>Age: </label>
-    <input type='number' name='update_person_age' id='update_person_age' min='0' />
+    <label for='create_enclosure_fname'>Enclosure Type: </label>
+    <input type='text' name='create_enclosure_fname' id='create_enclosure_fname' required />
 
     <input type='submit' />
 </form>
