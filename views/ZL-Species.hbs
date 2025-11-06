@@ -1,4 +1,5 @@
 <h1>Species</h1>
+
 {{! READ table }}
 <table>
     <thead>
@@ -14,17 +15,16 @@
     </thead>
 
     <tbody>
-        {{! For each row, print the id, common_name, and species_name }}
+        {{! For each row, print the id, common_name, scientific_name, homeworld and age }}
         {{#each species}}
         <tr>
-            <td>{{this.species_ID}}</td>
             <td>{{this.common_name}}</td>
             <td>{{this.scientific_name}}</td>
 
             {{! DELETE form }}
             <form id='delete_species_form'>
-                <input type='hidden' name='delete_species_ID' value='{{this.species_ID}}' />
-                <input type='hidden' name='delete_common_name' value='{{this.common_name}}' />
+                <input type='hidden' name='delete_species_id' value='{{this.species_ID}}' />
+                <input type='hidden' name='delete_species_name' value='{{this.common_name}} {{this.scientific_name}}' />
                 <td>
                     <button type='submit'>
                         Delete
@@ -37,7 +37,7 @@
 </table>
 
 {{! CREATE form }}
-<h2>Add a Species</h2>
+<h2>Create a Species</h2>
 <form class='cuForm' id='create_species_form'>
     <label for='create_species_common_name'>Common Name: </label>
     <input type='text' name='create_species_common_name' id='create_species_common_name' required />
@@ -51,32 +51,11 @@
 {{! UPDATE form }}
 <h2>Update a Species</h2>
 <form class='cuForm' id='update_species_form'>
-    <label for='update_species_id'>Species to Update: </label>
-    <select name='update_species_id' id='update_species_id' required>
-        <option value='' disabled selected>Select a Species</option>
-        {{#each species}}
-        <option value='{{this.id}}' required>
-            {{this.id}}
-            -
-            {{this.common_name}}
-            {{this.scientific_name}}
-        </option>
-        {{/each}}
-    </select>
+    <label for='update_species_common_name'>Common Name: </label>
+    <input type='text' name='update_species_common_name' id='update_species_common_name' required />
 
-    <label for='update_person_homeworld'>Homeworld: </label>
-    <select name='update_person_homeworld' id='update_person_homeworld'>
-        <option value='NULL' disabled selected>Select a Planet</option>
-        <option value='NULL'>&lt; None &gt;</option>
-        {{#each homeworlds}}
-        <option value='{{this.id}}' required>
-            {{this.name}}
-        </option>
-        {{/each}}
-    </select>
-
-    <label for='update_person_age'>Age: </label>
-    <input type='number' name='update_person_age' id='update_person_age' min='0' />
+    <label for='update_species_scientific_name'>Scientific Name: </label>
+    <input type='text' name='update_species_scientific_name' id='update_species_scientific_name' required />
 
     <input type='submit' />
 </form>
